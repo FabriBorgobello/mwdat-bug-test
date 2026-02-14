@@ -1,0 +1,87 @@
+name: MWDATBugTest
+options:
+  bundleIdPrefix: com.test
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "16.0"
+
+packages:
+  MetaWearablesDAT:
+    url: https://github.com/facebook/meta-wearables-dat-ios
+    from: "0.4.0"
+
+configs:
+  Debug-Zero: debug
+  Debug-Empty: debug
+  Debug-Real: debug
+
+settings:
+  base:
+    DEVELOPMENT_TEAM: YOUR_TEAM_ID
+    CODE_SIGN_STYLE: Automatic
+  configs:
+    Debug-Zero:
+      META_APP_ID: "0"
+      CLIENT_TOKEN: ""
+    Debug-Empty:
+      META_APP_ID: ""
+      CLIENT_TOKEN: ""
+    Debug-Real:
+      META_APP_ID: "YOUR_META_APP_ID"
+      CLIENT_TOKEN: "YOUR_CLIENT_TOKEN"
+
+targets:
+  MWDATBugTest:
+    type: application
+    platform: iOS
+    sources:
+      - Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.test.claudewearablestest
+        INFOPLIST_FILE: Supporting/Info.plist
+        GENERATE_INFOPLIST_FILE: false
+        CODE_SIGN_STYLE: Automatic
+    dependencies:
+      - package: MetaWearablesDAT
+        product: MWDATCore
+
+schemes:
+  BugTest-Zero:
+    build:
+      targets:
+        MWDATBugTest: all
+    run:
+      config: Debug-Zero
+    profile:
+      config: Debug-Zero
+    analyze:
+      config: Debug-Zero
+    archive:
+      config: Debug-Zero
+
+  BugTest-Empty:
+    build:
+      targets:
+        MWDATBugTest: all
+    run:
+      config: Debug-Empty
+    profile:
+      config: Debug-Empty
+    analyze:
+      config: Debug-Empty
+    archive:
+      config: Debug-Empty
+
+  BugTest-Real:
+    build:
+      targets:
+        MWDATBugTest: all
+    run:
+      config: Debug-Real
+    profile:
+      config: Debug-Real
+    analyze:
+      config: Debug-Real
+    archive:
+      config: Debug-Real
